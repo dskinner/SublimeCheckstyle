@@ -71,13 +71,13 @@ def checkstyle(view, callback=None):
     config_xml = get_setting("checkstyle_config_xml")
     args = get_setting("checkstyle_args", [])
 
-    cmd = [checkstyle_cmd, "-c", config_xml] + args + [view.file_name()]
+    cmd = [checkstyle_cmd] + args + [view.file_name()]
     p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
     def wait(p, view, callback):
         p.wait()
-        stdout = p.stdout.read()
-        stderr = p.stderr.read()
+        stdout = p.stdout.read().decode("utf-8")
+        stderr = p.stderr.read().decode("utf-8")
         if callback is not None:
             callback(view, stdout, stderr)
 
@@ -109,7 +109,7 @@ def show_results(view, stdout, stderr):
             _msgs.append(msg)
         except Exception as e:
             log.error(e)
-    view.add_regions("checkstyle", _regions, "comment", sublime.DRAW_OUTLINED)
+    view.add_regions("checkstyle", _regions, "comment", "dot", sublime.DRAW_OUTLINED)
 
 
 def update_status(view):

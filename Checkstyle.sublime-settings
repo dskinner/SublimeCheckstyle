@@ -1,6 +1,5 @@
 {
 	"checkstyle": true,
 	"checkstyle_cmd": "checkstyle",
-	"checkstyle_config_xml": "",
 	"checkstyle_args": []
 }
